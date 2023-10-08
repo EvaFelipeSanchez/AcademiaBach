@@ -6,12 +6,14 @@ using UnityEngine.UI;
 public class ToggleGameObject : MonoBehaviour
 {
     public GameObject objectToToggle;
+
     public Button toggleButton;
 
     private bool isObjectActive = false;
 
     private void Start()
     {
+    
         toggleButton.onClick.AddListener(ToggleObjectVisibility);
         objectToToggle.SetActive(isObjectActive);
     }
@@ -20,5 +22,9 @@ public class ToggleGameObject : MonoBehaviour
     {
         isObjectActive = !isObjectActive;
         objectToToggle.SetActive(isObjectActive);
+
+        
     }
+
+
 }
