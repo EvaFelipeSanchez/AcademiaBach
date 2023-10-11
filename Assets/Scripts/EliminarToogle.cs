@@ -10,10 +10,10 @@ public class EliminarToogle : MonoBehaviour
 {
     public GameObject pantallaAviso;
     public GameObject pantallaCompletar;
-    public Toggle togglePrefab;
+    public Toggle togglePrefab; 
     public  RectTransform scrollViewPapelera;
     public  RectTransform scrollViewChecklist;
-    
+
     public Button eliminarBoton;
 
     public Button eliminarfinalBoton;
@@ -31,26 +31,36 @@ public class EliminarToogle : MonoBehaviour
 
     private DateTime fechaCreacion;
     private bool enPapelera = false;
+    
 
     public GameObject quitarCheckmark;
+    private Toggle myToggle;
+
+    public GameObject calendario;
 
 
     // Start is called before the first frame update
     void Start()
     {   
+        myToggle = GetComponent<Toggle>();
+        myToggle.onValueChanged.AddListener(OnToggleValueChanged);
+
         eliminarBoton.onClick.AddListener(ActivarAviso);
         eliminarfinalBoton.onClick.AddListener(enviarapapeleratoogle);
-        Restaurar.onClick.AddListener(enviarachecklisttoogle);
+        Restaurar.onClick.AddListener(enviarachecklisttoogle); 
         noeliminarBoton.onClick.AddListener(quitaraviso);
 
         completarBoton.onClick.AddListener(enviarapapeleraCompletotoogle);
         nocompletarBoton.onClick.AddListener(quitaravisoCompletar);
-
+        togglePrefab.isOn = false;
 
         pantallaAviso.SetActive(false);
         pantallaCompletar.SetActive(false);
-        Restaurar.gameObject.SetActive(false);
+        Restaurar.gameObject.SetActive(false); 
+        eliminarBoton.gameObject.SetActive(true);
         quitarCheckmark.SetActive(true);
+        //calendario.SetActive(true);
+ 
     }
 
         public void ActivarAviso()
@@ -58,6 +68,26 @@ public class EliminarToogle : MonoBehaviour
         pantallaAviso.SetActive(true);        
         string textoDelToggle = nombretarea.text;
         nombretareaenaviso.text = textoDelToggle;
+
+    }
+
+        public void enviarapapeleratoogle(){
+
+        RectTransform toggleRectTransform = togglePrefab.GetComponent<RectTransform>();    
+        toggleRectTransform.SetParent(null);
+        togglePrefab.gameObject.SetActive(false);  
+
+        RectTransform scrollViewContent2RectTransform =scrollViewPapelera.GetComponent<RectTransform>();    
+        toggleRectTransform.SetParent(scrollViewContent2RectTransform);
+        togglePrefab.gameObject.SetActive(true);
+
+        eliminarBoton.gameObject.SetActive(false); 
+        Restaurar.gameObject.SetActive(true); 
+        pantallaAviso.SetActive(false);
+        fechaCreacion = DateTime.Now;
+        enPapelera = true;
+        quitarCheckmark.SetActive(false);
+
 
     }
 
@@ -84,27 +114,6 @@ public class EliminarToogle : MonoBehaviour
     }
 
 
-
-    public void enviarapapeleratoogle(){
-
-        RectTransform toggleRectTransform = togglePrefab.GetComponent<RectTransform>();    
-        toggleRectTransform.SetParent(null);
-        togglePrefab.gameObject.SetActive(false);  
-
-        RectTransform scrollViewContent2RectTransform =scrollViewPapelera.GetComponent<RectTransform>();    
-        toggleRectTransform.SetParent(scrollViewContent2RectTransform);
-        togglePrefab.gameObject.SetActive(true);
-
-        eliminarBoton.gameObject.SetActive(false); 
-        Restaurar.gameObject.SetActive(true); 
-        pantallaAviso.SetActive(false);
-        fechaCreacion = DateTime.Now;
-        enPapelera = true;
-        quitarCheckmark.SetActive(false);
-
-
-    }
-
         public void enviarachecklisttoogle(){
 
         RectTransform toggleRectTransform = togglePrefab.GetComponent<RectTransform>();    
@@ -116,7 +125,7 @@ public class EliminarToogle : MonoBehaviour
         togglePrefab.gameObject.SetActive(true);
 
         eliminarBoton.gameObject.SetActive(true); 
-          Restaurar.gameObject.SetActive(false); 
+        Restaurar.gameObject.SetActive(false); 
         pantallaAviso.SetActive(false);
         fechaCreacion = DateTime.Now;
         enPapelera = false;
@@ -132,6 +141,7 @@ public class EliminarToogle : MonoBehaviour
                         // Calcula la diferencia en días entre la fecha actual y la fecha de creación.
             TimeSpan diferencia = DateTime.Now - fechaCreacion;
 
+
             // Si han pasado 30 días o más, elimina el Toggle.
             if (diferencia.TotalDays >= 30)
             {
@@ -142,16 +152,33 @@ public class EliminarToogle : MonoBehaviour
         }
 
     }
+
     public void quitaraviso(){
          pantallaAviso.SetActive(false);
          nombretareaenaviso.text = "";
+   
 
     }
 
-        public void quitaravisoCompletar(){
+    public void quitaravisoCompletar(){
          pantallaCompletar.SetActive(false);
          nombretareaenavisoCompletar.text = "";
+         togglePrefab.isOn = false;
 
+    }
+
+        private void OnToggleValueChanged(bool isOn)
+    {
+        if (isOn)
+        {
+            Debug.Log("Toggle " + myToggle.name + " activado.");
+            // Realiza acciones específicas para este Toggle
+        }
+        else
+        {
+            Debug.Log("Toggle " + myToggle.name + " desactivado.");
+            // Realiza acciones específicas para este Toggle cuando se desactiva
+        }
     }
 
 

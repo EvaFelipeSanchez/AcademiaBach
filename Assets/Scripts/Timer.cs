@@ -46,6 +46,28 @@ public class Timer : MonoBehaviour
 
     public bool activarboton = true;
 
+    //Salir de la aplicación
+    public GameObject confirmationPanel;
+    
+    public Button isYes;
+    public Button isNo;
+    private bool isConfirmationOpen = false;
+    public bool isInSet = false;
+
+    public Button empezar;
+
+    //InformaciónGeneral
+
+    private int minutostotalesgeneral = 0;
+    private int minuetostotalesmensual = 0;
+
+    private int minutostotalessemanales = 0;
+
+    private int minutostotalesdiarios = 0;
+
+
+
+    //Distribución de puntos
 
 
 
@@ -54,6 +76,11 @@ public class Timer : MonoBehaviour
         Being(pomset);
         mensajeestado.text = "EMPEZAR";
 
+        confirmationPanel.SetActive(isConfirmationOpen);
+        isYes.onClick.AddListener(CerrarAplicacion);
+        isNo.onClick.AddListener(NoCerrarAplicacion);
+        empezar.onClick.AddListener(empezarSet);
+        isInSet = false;
     }
 
     private void Update()
@@ -63,9 +90,42 @@ public class Timer : MonoBehaviour
             StopCoroutine(UpdateTimer());
         }
 
+        if(isInSet){
+          Screen.fullScreen = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape) && !isConfirmationOpen)
+        { 
+            if(isInSet){
+            // El usuario ha presionado Escape, muestra la ventana de confirmación
+            ShowExitConfirmation();
+            }
+
+        }
+
    
     }
+    
 
+    private void ShowExitConfirmation(){
+        isConfirmationOpen = true;
+        confirmationPanel.SetActive(isConfirmationOpen);
+
+
+    }
+
+    private void CerrarAplicacion(){
+        Application.Quit();
+    }
+
+  private void NoCerrarAplicacion(){
+        isConfirmationOpen = false;
+        confirmationPanel.SetActive(isConfirmationOpen);
+    }
+
+    private void empezarSet(){
+        isInSet = true;
+    }
 
     private void Being(int Second)
     {
@@ -74,6 +134,7 @@ public class Timer : MonoBehaviour
         remainingdesc2 = desc2;
         sesiontrab = true;
         StartCoroutine(UpdateTimer());
+        isInSet = true;
         float valorActual = slider.value;
         float minutos = valorActual / 60; // Convierte el valor del Slider a minutos.
         int minutosredondeados = (int)Math.Round(minutos);
@@ -133,13 +194,14 @@ public class Timer : MonoBehaviour
 
     public IEnumerator UpdateTimer()
     {    
-
+        
 
            
             //while (minutostotales > 0)
             //{
                 while (numacset < numtotalset)
                 {
+
                     System.Random random = new System.Random();            
                     int randomIndexTrabajo =  random.Next(0, mensajesdetrabajo.Length);
                     int randomIndexDescanso =  random.Next(0, mensajesdedescanso.Length);
@@ -288,6 +350,7 @@ public class Timer : MonoBehaviour
         activarboton = true;
         minutostotales = minutossalvados;
         Being(pomset);
+        isInSet = false;
 
 
     }
