@@ -69,18 +69,27 @@ public class Timer : MonoBehaviour
 
     //Distribución de puntos
 
+    public int puntosactuales = 0; //Se guarda
+    public TMP_Text puntostexto;
+
+    public GameManager gameManager;
+
 
 
     private void Start()
     {
         Being(pomset);
         mensajeestado.text = "EMPEZAR";
+        
+        gameManager = FindObjectOfType<GameManager>();
 
         confirmationPanel.SetActive(isConfirmationOpen);
         isYes.onClick.AddListener(CerrarAplicacion);
         isNo.onClick.AddListener(NoCerrarAplicacion);
         empezar.onClick.AddListener(empezarSet);
         isInSet = false;
+        minutostotales = 0;
+        numacset= 0;
     }
 
     private void Update()
@@ -102,6 +111,13 @@ public class Timer : MonoBehaviour
             }
 
         }
+       string textoPuntosEntero = puntosactuales.ToString();  
+        puntostexto.text = textoPuntosEntero;
+
+        gameManager.gameData.puntos = puntosactuales;
+        gameManager.SaveGameData(); // Guarda los datos actualizados
+
+
 
    
     }
@@ -124,7 +140,9 @@ public class Timer : MonoBehaviour
     }
 
     private void empezarSet(){
+
         isInSet = true;
+
     }
 
     private void Being(int Second)
@@ -133,6 +151,7 @@ public class Timer : MonoBehaviour
         remainingdesc = desc;
         remainingdesc2 = desc2;
         sesiontrab = true;
+
         StartCoroutine(UpdateTimer());
         isInSet = true;
         float valorActual = slider.value;
@@ -140,6 +159,7 @@ public class Timer : MonoBehaviour
         int minutosredondeados = (int)Math.Round(minutos);
         mensajeestado.text = "EMPEZAR";
         UpdateResultadoText(minutosredondeados);
+
  
     }
 
@@ -199,6 +219,7 @@ public class Timer : MonoBehaviour
            
             //while (minutostotales > 0)
             //{
+            
                 while (numacset < numtotalset)
                 {
 
@@ -351,6 +372,11 @@ public class Timer : MonoBehaviour
         minutostotales = minutossalvados;
         Being(pomset);
         isInSet = false;
+        puntosactuales = puntosactuales + numacset;
+        numacset = 0;
+        slider.value = slider.minValue;
+
+        
 
 
     }

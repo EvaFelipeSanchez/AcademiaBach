@@ -36,7 +36,6 @@ public class EliminarToogle : MonoBehaviour
     public GameObject quitarCheckmark;
     private Toggle myToggle;
 
-    public GameObject calendario;
 
 
     // Start is called before the first frame update
@@ -45,13 +44,16 @@ public class EliminarToogle : MonoBehaviour
         myToggle = GetComponent<Toggle>();
         myToggle.onValueChanged.AddListener(OnToggleValueChanged);
 
-        eliminarBoton.onClick.AddListener(ActivarAviso);
-        eliminarfinalBoton.onClick.AddListener(enviarapapeleratoogle);
+        //eliminarBoton.onClick.AddListener(ActivarAviso);
+        
+        eliminarBoton.onClick.AddListener(enviarapapeleratoogle);
         Restaurar.onClick.AddListener(enviarachecklisttoogle); 
         noeliminarBoton.onClick.AddListener(quitaraviso);
 
-        completarBoton.onClick.AddListener(enviarapapeleraCompletotoogle);
-        nocompletarBoton.onClick.AddListener(quitaravisoCompletar);
+
+        togglePrefab.onValueChanged.AddListener(OnToggleValueChanged2);
+        //completarBoton.onClick.AddListener(enviarapapeleraCompletotoogle);
+        //nocompletarBoton.onClick.AddListener(quitaravisoCompletar);
         togglePrefab.isOn = false;
 
         pantallaAviso.SetActive(false);
@@ -63,15 +65,38 @@ public class EliminarToogle : MonoBehaviour
  
     }
 
-        public void ActivarAviso()
+    /*   public void ActivarAviso()
     {
         pantallaAviso.SetActive(true);        
         string textoDelToggle = nombretarea.text;
         nombretareaenaviso.text = textoDelToggle;
-
+        eliminarfinalBoton.onClick.AddListener(enviarapapeleratoogle);
     }
+    */
 
-        public void enviarapapeleratoogle(){
+        private void OnToggleValueChanged2(bool isOn)
+    {
+        if (isOn)
+        {
+            // El Toggle se encendió, mostrar el Canvas de aviso.
+            //pantallaCompletar.SetActive(true);
+            enviarapapeleraCompletotoogle();
+            string textoDelToggle = nombretarea.text;
+            nombretareaenaviso.text = textoDelToggle;
+  
+
+
+        }
+        else
+        {
+            // El Toggle se apagó, ocultar el Canvas de aviso.
+           //pantallaCompletar.SetActive(false);
+
+        }
+    }
+    
+
+        public void enviarapapeleratoogle(){ //ELIMINAR
 
         RectTransform toggleRectTransform = togglePrefab.GetComponent<RectTransform>();    
         toggleRectTransform.SetParent(null);
@@ -108,14 +133,15 @@ public class EliminarToogle : MonoBehaviour
          pantallaCompletar.SetActive(false);
         fechaCreacion = DateTime.Now;
         enPapelera = true;
+        togglePrefab.isOn = false;
         quitarCheckmark.SetActive(false);
 
 
     }
 
 
-        public void enviarachecklisttoogle(){
-
+        public void enviarachecklisttoogle(){ //RESTAURAR
+ 
         RectTransform toggleRectTransform = togglePrefab.GetComponent<RectTransform>();    
         toggleRectTransform.SetParent(null);
         togglePrefab.gameObject.SetActive(false);  

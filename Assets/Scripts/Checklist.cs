@@ -46,7 +46,7 @@ public class Checklist : MonoBehaviour
            pantallaAvisoCompleto.SetActive(false);
            calendario.SetActive(true);
            isOn = false;
-           togglePrefab.onValueChanged.AddListener(OnToggleValueChanged);
+           //togglePrefab.onValueChanged.AddListener(OnToggleValueChanged);
            //SortElements();
  
 
@@ -133,7 +133,7 @@ public class Checklist : MonoBehaviour
     }
 
 
-    private void OnToggleValueChanged(bool isOn)
+    /*private void OnToggleValueChanged(bool isOn)
     {
         if (isOn)
         {
@@ -152,7 +152,7 @@ public class Checklist : MonoBehaviour
            pantallaAvisoCompleto.SetActive(false);
 
         }
-    }
+    }*/
 
         public void GetToggleData()
     {
