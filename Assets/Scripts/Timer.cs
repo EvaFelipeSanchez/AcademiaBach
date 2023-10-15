@@ -71,8 +71,18 @@ public class Timer : MonoBehaviour
 
     public int puntosactuales = 0; //Se guarda
     public TMP_Text puntostexto;
+    public TMP_Text puntostexto2;
 
-    public GameManager gameManager;
+    //public GameManager gameManager;
+
+    //Mascota
+
+    public GameObject mascotaactual;
+    public Image MascotaActualDor;
+    public Image MascotaActualDepr;
+    public bool viva = true;
+
+    public bool tenermascota = true;
 
 
 
@@ -81,7 +91,10 @@ public class Timer : MonoBehaviour
         Being(pomset);
         mensajeestado.text = "EMPEZAR";
         
-        gameManager = FindObjectOfType<GameManager>();
+        //gameManager = FindObjectOfType<GameManager>();
+
+        MascotaActualDor.enabled = false;
+        MascotaActualDepr.enabled = true;
 
         confirmationPanel.SetActive(isConfirmationOpen);
         isYes.onClick.AddListener(CerrarAplicacion);
@@ -101,8 +114,15 @@ public class Timer : MonoBehaviour
 
         if(isInSet){
           Screen.fullScreen = true;
+            MascotaActualDor.enabled = true;
+            MascotaActualDepr.enabled = false;
+        }else{
+          Screen.fullScreen = false;
+            MascotaActualDor.enabled = false;
+            MascotaActualDepr.enabled = true;
         }
 
+  
         if (Input.GetKeyDown(KeyCode.Escape) && !isConfirmationOpen)
         { 
             if(isInSet){
@@ -113,9 +133,10 @@ public class Timer : MonoBehaviour
         }
        string textoPuntosEntero = puntosactuales.ToString();  
         puntostexto.text = textoPuntosEntero;
+        puntostexto2.text = textoPuntosEntero;
 
-        gameManager.gameData.puntos = puntosactuales;
-        gameManager.SaveGameData(); // Guarda los datos actualizados
+        //gameManager.gameData.puntos = puntosactuales;
+        //gameManager.SaveGameData(); // Guarda los datos actualizados
 
 
 
@@ -251,6 +272,7 @@ public class Timer : MonoBehaviour
                                     uiFill.fillAmount = Mathf.InverseLerp(0, pomset, remainingpomset);
                                     remainingpomset--;
                                     minutostotales--;
+                                    slider.value--; //
                                     if(minutostotales < -1){
                                          OnEnd();
                                          yield break;
@@ -285,6 +307,7 @@ public class Timer : MonoBehaviour
                                         uiFill.fillAmount = Mathf.InverseLerp(0, desc2, remainingdesc2);
                                         remainingdesc2--;
                                         minutostotales--;
+                                        slider.value--; //
                                         if(minutostotales < -1){
                                             OnEnd();
                                             yield break;
@@ -317,6 +340,7 @@ public class Timer : MonoBehaviour
                                         uiFill.fillAmount = Mathf.InverseLerp(0, desc, remainingdesc);
                                         remainingdesc--;
                                         minutostotales--;
+                                        slider.value--; //
                                         if(minutostotales < -1){
                                             OnEnd();
                                             yield break;
@@ -366,6 +390,7 @@ public class Timer : MonoBehaviour
     {
         //End Time , if want Do something
         print("End");
+        
         mensajeestado.text = "EMPEZAR";
         GoOn = !GoOn;
         activarboton = true;
