@@ -33,8 +33,6 @@ public class Tienda : MonoBehaviour
      private bool terminadaoperacion = false;
 
 
-
-
     void Start()
     {
         mascotadespier.enabled = false; 
@@ -49,12 +47,11 @@ public class Tienda : MonoBehaviour
      void Update()
      {
         if(int.TryParse(puntosparaComprar.text, out int puntosparaComprarint)){
-            if(int.TryParse(puntosparaComprarMenuPrin.text, out int puntosparaComprarMenuPrinint)){
              if(int.TryParse(precio.text, out int precioint)){
                  if(puntosparaComprarint >= precioint){
 
                 Comprar.onClick.AddListener(comprarMascota); // inputfieldnombre   
-
+      
                   
                  }else{
                     Comprar.onClick.AddListener(nocomprarMascota); 
@@ -63,7 +60,7 @@ public class Tienda : MonoBehaviour
 
             
              }
-            }
+            
         }
 
         if(terminadaoperacion){
@@ -71,6 +68,8 @@ public class Tienda : MonoBehaviour
             terminadaoperacion = false;
             ponernombre.text = "";
         }
+
+        
 
         
 
@@ -98,6 +97,7 @@ public class Tienda : MonoBehaviour
                     TMP_Text[] tmpTextComponent = newmascotacomprada.GetComponentsInChildren<TMP_Text>();
                     tmpTextComponent[1].text = ponernombre.text;
 
+
                     if (imagesClonedA.Length > 0)
                     {
                         // Configura el texto del primer TMP_Text encontrado
@@ -106,11 +106,20 @@ public class Tienda : MonoBehaviour
                         // Configura el texto del segundo TMP_Text encontrado (si existe)
                         if (imagesClonedA.Length > 1)
                         {
-                            imagesClonedA[1].sprite = imagesB[4].sprite;
+                            imagesClonedA[1].sprite = imagesB[5].sprite;
                         }
 
-                    }                   
-                
+                    }  
+
+                    //public GameObject puntosTienda;
+                    //public GameObject puntosMenu;
+                    int valueA = int.Parse(puntosparaComprar.text);
+                    int valueB = int.Parse(precio.text);
+                    int result = valueA - valueB;
+                    puntosparaComprar.text = result.ToString();
+                    puntosparaComprarMenuPrin.text= result.ToString();
+                    //Debug.Log("Total monedas: " + puntosparaComprar.text);
+                                  
                     //mascotatienda.SetActive(false);
 
                     limit = 1;  

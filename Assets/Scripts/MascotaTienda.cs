@@ -20,9 +20,6 @@ public class MascotaTienda : MonoBehaviour
      public  RectTransform scrollViewContentTienda;
  
 
-     private int limit = 0; //Guardar
-
-
 
 
     void Start()

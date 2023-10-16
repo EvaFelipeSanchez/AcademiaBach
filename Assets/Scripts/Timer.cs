@@ -56,17 +56,7 @@ public class Timer : MonoBehaviour
 
     public Button empezar;
 
-    //InformaciónGeneral
-
-    private int minutostotalesgeneral = 0;
-    private int minuetostotalesmensual = 0;
-
-    private int minutostotalessemanales = 0;
-
-    private int minutostotalesdiarios = 0;
-
-
-
+  
     //Distribución de puntos
 
     public int puntosactuales = 0; //Se guarda
@@ -84,6 +74,23 @@ public class Timer : MonoBehaviour
 
     public bool tenermascota = true;
 
+    public GameObject SinMascota;
+
+
+    public TMP_Text textoamover;
+    public RectTransform  scrollViewOrigen;
+    public RectTransform  scrollViewCementerio;
+
+    public GameObject mascotacementarioprefab;
+
+     private int limit = 0; //Guardar
+
+     private bool terminadaoperacion = false;
+
+     DateTime fechaActual = DateTime.Now;
+
+  
+
 
 
     private void Start()
@@ -95,7 +102,7 @@ public class Timer : MonoBehaviour
 
         MascotaActualDor.enabled = false;
         MascotaActualDepr.enabled = true;
-
+        SinMascota.SetActive(false);
         confirmationPanel.SetActive(isConfirmationOpen);
         isYes.onClick.AddListener(CerrarAplicacion);
         isNo.onClick.AddListener(NoCerrarAplicacion);
@@ -103,6 +110,7 @@ public class Timer : MonoBehaviour
         isInSet = false;
         minutostotales = 0;
         numacset= 0;
+        viva = true;
     }
 
     private void Update()
@@ -131,16 +139,28 @@ public class Timer : MonoBehaviour
             }
 
         }
+
+
+        if(terminadaoperacion){
+            limit = 0;
+            terminadaoperacion = false;
+
+        }
+
        string textoPuntosEntero = puntosactuales.ToString();  
         puntostexto.text = textoPuntosEntero;
         puntostexto2.text = textoPuntosEntero;
 
-        //gameManager.gameData.puntos = puntosactuales;
-        //gameManager.SaveGameData(); // Guarda los datos actualizados
-
-
-
    
+    }
+
+
+    public void Changevivavalue(){
+        //viva =  true;
+        SinMascota.SetActive(false);
+        MascotaActualDor.enabled = false;
+        MascotaActualDepr.enabled = true;
+        Debug.Log("Viva es true");
     }
     
 
@@ -152,8 +172,79 @@ public class Timer : MonoBehaviour
     }
 
     private void CerrarAplicacion(){
-        Application.Quit();
+        //Application.Quit();                  //CAMBIAR
+        //viva = false;
+
+        SinMascota.SetActive(true);
+        MascotaActualDor.enabled = false;
+        MascotaActualDepr.enabled = false;
+        isConfirmationOpen = false;
+        
+        mascotamuerta();
+
+        confirmationPanel.SetActive(isConfirmationOpen);
+        numacset = 0;
+        minutostotales = 0;
+        Debug.Log("Viva es false");
+        OnEnd();
+
+  
+
+    } 
+    
+        public GameObject EncontrarObjetoPorTexto()
+    {
+        // Obtén el contenido de la ScrollView
+        Transform content = scrollViewOrigen;
+
+        // Recorre todos los elementos en el contenido de la ScrollView
+        foreach (Transform child in content)
+        {
+            // Intenta obtener el componente TMP_Text en el GameObject hijo
+            //TMP_Text tmpText = child.GetComponent<TMP_Text>();
+            TMP_Text[] tmpText = child.GetComponentsInChildren<TMP_Text>();
+
+           Debug.Log(tmpText[1].text);
+            // Verifica si se encontró un componente TMP_Text y si su texto coincide con el contenido buscado
+            if (tmpText != null && tmpText[1].text == textoamover.text)
+            {
+
+                // Si se encuentra un objeto con el texto deseado, puedes retornar el GameObject
+                return child.gameObject;
+            }
+        }
+
+        // Si no se encuentra, retorna null
+        return null;
     }
+
+
+    public void mascotamuerta(){
+
+        if(limit == 0 ){
+        
+
+  
+         GameObject newmascotamuerta = Instantiate(mascotacementarioprefab, scrollViewCementerio);
+         GameObject mascotaamover = EncontrarObjetoPorTexto();
+
+        Image[] imagesB = mascotaamover.GetComponentsInChildren<Image>();                  
+         Image[] imagesClonedA = newmascotamuerta.GetComponentsInChildren<Image>();
+         TMP_Text[] tmpTextComponent = newmascotamuerta.GetComponentsInChildren<TMP_Text>();
+         tmpTextComponent[0].text =  textoamover.text;
+         string fechaFormateada = fechaActual.ToString("dd/MM/yyyy");
+         tmpTextComponent[1].text = fechaFormateada;
+         
+        imagesClonedA[0].sprite = imagesB[0].sprite;    
+
+
+         limit = 1;  
+         terminadaoperacion = true;
+         mascotaamover.SetActive(false);
+       
+         }  
+
+   }
 
   private void NoCerrarAplicacion(){
         isConfirmationOpen = false;
@@ -405,4 +496,6 @@ public class Timer : MonoBehaviour
 
 
     }
+
+    
 }

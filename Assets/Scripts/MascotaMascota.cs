@@ -28,17 +28,11 @@ public class MascotaMascota : MonoBehaviour
      
    public Button cerraravisoactivacion;
 
- 
-
    public bool activo = false;
 
+ 
 
-
-   
-
-
-
-   private int limit = 0; //Guardar
+   //private int limit = 0; //Guardar
 
    void Start()
    {
@@ -52,6 +46,8 @@ public class MascotaMascota : MonoBehaviour
         activo = false;
 
    }
+
+
 
    void Update()
    {
@@ -70,14 +66,13 @@ public class MascotaMascota : MonoBehaviour
 
    public void pasarAactivo(){
 
-      
-
       Image[] mascotaactualC = mascotaactual.GetComponentsInChildren<Image>();
       Image[] mascotaactivarC = mascotaactivar.GetComponentsInChildren<Image>();
       TMP_Text[] mascotanombre = mascotaactual.GetComponentsInChildren<TMP_Text>();
 
-      mascotaactualC[0].sprite = mascotaactivarC[1].sprite;
       mascotaactualC[1].sprite = mascotaactivarC[0].sprite;
+      mascotaactualC[0].sprite = mascotaactivarC[1].sprite;
+      //mascotaactualC[1].sprite = mascotaactivarC[0].sprite;
       mascotanombre[0].text= nombremascotameso.text;
       nombremascotaactualpuesto.text = nombremascotameso.text;
       
@@ -89,6 +84,9 @@ public class MascotaMascota : MonoBehaviour
    private void cerraraviso(){
       avisoactivacion.SetActive(false); 
    }
+
+
+
 
             
               
