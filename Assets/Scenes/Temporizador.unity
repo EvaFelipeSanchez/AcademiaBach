@@ -1256,6 +1256,9 @@ MonoBehaviour:
   scrollViewOrigen: {fileID: 958124350}
   scrollViewCementerio: {fileID: 1615566638}
   mascotacementarioprefab: {fileID: 1999943978}
+  data:
+    puntos: 0
+  nombremascotactual: {fileID: 1726921131}
   minutossalvados: 0
   mensajesdetrabajo:
   - Mensaje de trabajo 1
@@ -6892,6 +6895,8 @@ MonoBehaviour:
   cerraraviso: {fileID: 1411409957}
   mascotatienda: {fileID: 477230708}
   ponernombre: {fileID: 1709295810}
+  data:
+    puntos: 0
 --- !u!114 &477230711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10547,8 +10552,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 633843384}
   m_HandleRect: {fileID: 633843383}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.9999704
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -12742,6 +12747,10 @@ MonoBehaviour:
   avisoactivacion: {fileID: 981593065}
   cerraravisoactivacion: {fileID: 1661237891}
   activo: 1
+  data:
+    imagePathmascotactualdespierta: 
+    imagePathmascotactualdormido: 
+    nombreactual: {fileID: 531116974}
 --- !u!1 &970070498
 GameObject:
   m_ObjectHideFlags: 0
@@ -13548,7 +13557,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 934778188}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99998593
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14105,52 +14114,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1087521004
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1087521006}
-  - component: {fileID: 1087521005}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1087521005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1087521004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59b9b3a7406635440860cbbb4af46fc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameData:
-    puntos: 0
---- !u!4 &1087521006
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1087521004}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.28017727, y: -0.11679189, z: 845.14484}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1103549210
 GameObject:
   m_ObjectHideFlags: 0
@@ -15769,7 +15732,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -575.74, y: 361.26556}
+  m_AnchoredPosition: {x: -575.74, y: 361.2648}
   m_SizeDelta: {x: 1151.5, y: 722.53}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1194381750
@@ -21069,7 +21032,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -575.74, y: 429.10028}
+  m_AnchoredPosition: {x: -575.74, y: 429.10013}
   m_SizeDelta: {x: 1151.48, y: 631.23}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1575126920
@@ -24909,6 +24872,8 @@ MonoBehaviour:
   cerraraviso: {fileID: 1411409957}
   mascotatienda: {fileID: 1909133067}
   ponernombre: {fileID: 1653298135}
+  data:
+    puntos: 0
 --- !u!1 &1926424859
 GameObject:
   m_ObjectHideFlags: 0

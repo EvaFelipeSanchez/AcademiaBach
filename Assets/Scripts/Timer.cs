@@ -89,6 +89,14 @@ public class Timer : MonoBehaviour
 
      DateTime fechaActual = DateTime.Now;
 
+    //GuardarPuntosVariableText
+
+    public ExampleDataPuntos data;
+    public const string pathData = "Data/test";
+    public const string nameFileData = "ExampleData";
+
+    public TMP_Text nombremascotactual;
+
   
 
 
@@ -111,6 +119,30 @@ public class Timer : MonoBehaviour
         minutostotales = 0;
         numacset= 0;
         viva = true;
+
+        puntostexto.text = data.puntos.ToString();
+        puntostexto2.text= data.puntos.ToString();
+        puntosactuales = data.puntos;
+        //MascotaActualDor = data.mascotactualdormido;
+        //MascotaActualDepr = data.mascotactualdespierta;
+        //nombremascotactual = data.nombreactual;
+
+
+        //mascotaactual = data.mascotactual;
+
+        var dataFound = SaveLoadSystemData.LoadData<ExampleDataPuntos>(pathData, nameFileData);
+
+        if(dataFound != null){
+            data = dataFound;
+            ChangeValues();
+        }
+        else{
+        data = new ExampleDataPuntos();
+        SaveData();
+        }
+        Debug.Log("Estado almacenado: " + data.puntos.ToString());
+
+
     }
 
     private void Update()
@@ -119,6 +151,12 @@ public class Timer : MonoBehaviour
         {
             StopCoroutine(UpdateTimer());
         }
+
+        puntostexto.text = data.puntos.ToString();
+        puntostexto2.text= data.puntos.ToString();
+        puntosactuales = data.puntos;
+
+
 
         if(isInSet){
           Screen.fullScreen = true;
@@ -147,12 +185,27 @@ public class Timer : MonoBehaviour
 
         }
 
-       string textoPuntosEntero = puntosactuales.ToString();  
-        puntostexto.text = textoPuntosEntero;
-        puntostexto2.text = textoPuntosEntero;
+       //string textoPuntosEntero = puntosactuales.ToString();  
+       //puntostexto.text = textoPuntosEntero;
+        //puntostexto2.text = textoPuntosEntero;
 
    
     }
+
+    private void ChangeValues(){
+      puntostexto.text = data.puntos.ToString();
+      puntostexto2.text= data.puntos.ToString();
+      //MascotaActualDor = data.mascotactualdormido;
+       //MascotaActualDepr = data.mascotactualdespierta;
+      //nombremascotactual = data.nombreactual;
+      //mascotaactual = data.mascotactual;
+      //Debug.Log("Estado almacenado: " + puntostexto.text);
+    }
+
+    private void SaveData(){
+        SaveLoadSystemData.SaveData(data, pathData, nameFileData);
+    }
+
 
 
     public void Changevivavalue(){
@@ -160,7 +213,7 @@ public class Timer : MonoBehaviour
         SinMascota.SetActive(false);
         MascotaActualDor.enabled = false;
         MascotaActualDepr.enabled = true;
-        Debug.Log("Viva es true");
+        //Debug.Log("Viva es true");
     }
     
 
@@ -185,8 +238,7 @@ public class Timer : MonoBehaviour
         confirmationPanel.SetActive(isConfirmationOpen);
         numacset = 0;
         minutostotales = 0;
-        Debug.Log("Viva es false");
-        OnEnd();
+         OnEnd();
 
   
 
@@ -489,6 +541,9 @@ public class Timer : MonoBehaviour
         Being(pomset);
         isInSet = false;
         puntosactuales = puntosactuales + numacset;
+        data.puntos = puntosactuales;
+        ChangeValues();
+        SaveData();
         numacset = 0;
         slider.value = slider.minValue;
 

@@ -33,6 +33,14 @@ public class Tienda : MonoBehaviour
      private bool terminadaoperacion = false;
 
 
+     //GuardarPuntosVariableText
+
+    public ExampleDataPuntos data;
+
+    public const string pathData = "Data/test";
+    public const string nameFileData = "ExampleData";
+
+
     void Start()
     {
         mascotadespier.enabled = false; 
@@ -42,8 +50,20 @@ public class Tienda : MonoBehaviour
         mascotatienda.SetActive(true);
         terminadaoperacion = false;
         limit = 0; 
+
+        var dataFound = SaveLoadSystemData.LoadData<ExampleDataPuntos>(pathData, nameFileData);
+
+        if(dataFound != null){
+            data = dataFound;
+            ChangeValues();
+        }
+        else{
+        data = new ExampleDataPuntos();
+        SaveData();
+        }
         
     }
+
      void Update()
      {
         if(int.TryParse(puntosparaComprar.text, out int puntosparaComprarint)){
@@ -57,7 +77,6 @@ public class Tienda : MonoBehaviour
                     Comprar.onClick.AddListener(nocomprarMascota); 
 
                  }
-
             
              }
             
@@ -69,13 +88,21 @@ public class Tienda : MonoBehaviour
             ponernombre.text = "";
         }
 
-        
 
-        
-
-        
+    
             
      }
+
+    private void ChangeValues(){
+      puntosparaComprar.text = data.puntos.ToString();
+      puntosparaComprarMenuPrin.text= data.puntos.ToString();
+      //Debug.Log("Estado almacenado tras comprar: " + puntosparaComprar.text);
+    }
+
+    private void SaveData(){
+        SaveLoadSystemData.SaveData(data, pathData, nameFileData);
+    }
+
 
 
 
@@ -116,16 +143,21 @@ public class Tienda : MonoBehaviour
                     int valueA = int.Parse(puntosparaComprar.text);
                     int valueB = int.Parse(precio.text);
                     int result = valueA - valueB;
-                    puntosparaComprar.text = result.ToString();
-                    puntosparaComprarMenuPrin.text= result.ToString();
-                    //Debug.Log("Total monedas: " + puntosparaComprar.text);
-                                  
+                    data.puntos = result;
+                    
+                    Debug.Log("Total puntos: " + data.puntos);
+                    
+                    //puntosparaComprar.text = data.puntos.ToString();
+                    //puntosparaComprarMenuPrin.text= data.puntos.ToString();
+                                            
                     //mascotatienda.SetActive(false);
 
                     limit = 1;  
                     terminadaoperacion = true;
 
                     //activarpuestanombre();
+                    ChangeValues();
+                    SaveData();
       
                     }      
     }
